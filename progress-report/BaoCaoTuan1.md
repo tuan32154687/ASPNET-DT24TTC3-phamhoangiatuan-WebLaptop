@@ -8,6 +8,10 @@
 - Phát triển ứng dụng**:
 - Khởi tạo dự án ASP.NET Core MVC.
 - Xây dựng Model `Laptop` (trong thư mục `Models/`) để chuẩn bị cho việc quản lý dữ liệu sản phẩm.
+- Thiết lập Database:
+  - Cài đặt các gói NuGet cần thiết (Entity Framework Core).
+  - Xây dựng lớp `LaptopDbContext` trong thư mục `Data`.
+  - Cấu hình file `.gitignore` để tối ưu hóa việc quản lý source code.
     
  2. Kết quả đạt được
 - Dự án đã được đồng bộ hóa thành công trên GitHub.
