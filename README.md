@@ -9,8 +9,3 @@
 
    Giới thiệu đồ án:
 Dự án xây dựng một website thương mại điện tử chuyên kinh doanh các dòng sản phẩm Laptop sử dụng nền tảng ASP.NET Core MVC kết hợp SQL Server. 
-
-  Tiến độ thực hiện (Tuần 1):
-- Khởi tạo Repository trên GitHub và cấu hình đúng cú pháp yêu cầu.
-- Thêm giảng viên hướng dẫn làm Cộng tác viên (Collaborator).
-- Khởi tạo file tài liệu README.md giới thiệu tổng quan đề tài.
