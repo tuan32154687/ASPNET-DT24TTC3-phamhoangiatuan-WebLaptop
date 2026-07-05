@@ -1,0 +1,21 @@
+﻿@model IEnumerable<LaptopStore.Models.Laptop>
+
+<h1>Danh sách Laptop</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
