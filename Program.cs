@@ -1,3 +1,4 @@
+using LaptopStore.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+using (var scope = app.Services.CreateScope())
+{
+    await DbInitializer.SeedAsync(scope.ServiceProvider);
+}
 
 
 app.Run();

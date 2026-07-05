@@ -8,6 +8,7 @@ namespace LaptopStore.Data
         public LaptopDbContext(DbContextOptions<LaptopDbContext> options) : base(options) { }
 
         public DbSet<Laptop> Laptops { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

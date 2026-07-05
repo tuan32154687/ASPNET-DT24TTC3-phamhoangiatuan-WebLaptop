@@ -19,5 +19,25 @@ namespace LaptopStore.Controllers
             var laptops = await _context.Laptops.ToListAsync();
             return View(laptops);
         }
+
+        // Action hiển thị chi tiết sản phẩm
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var laptop = await _context.Laptops
+                .Include(l => l.Category) // Lấy thông tin danh mục kèm theo
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (laptop == null)
+            {
+                return NotFound();
+            }
+
+            return View(laptop);
+        }
     }
 }

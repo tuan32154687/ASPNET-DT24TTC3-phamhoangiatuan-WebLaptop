@@ -3,6 +3,7 @@ using LaptopStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LaptopStore.Migrations
 {
     [DbContext(typeof(LaptopDbContext))]
-    partial class LaptopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260705062801_AddCategoryToDatabase")]
+    partial class AddCategoryToDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,22 +50,10 @@ namespace LaptopStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Cpu")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gpu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -71,18 +62,6 @@ namespace LaptopStore.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Ram")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ScreenSize")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Storage")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

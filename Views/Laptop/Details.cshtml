@@ -1,0 +1,20 @@
+﻿@model LaptopStore.Models.Laptop
+
+<div class="container mt-4">
+    <h2>Chi tiết sản phẩm: @Model.Name</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Thương hiệu:</strong> @Model.Brand</p>
+            <p><strong>CPU:</strong> @Model.Cpu</p>
+            <p><strong>RAM:</strong> @Model.Ram</p>
+            <p><strong>Dung lượng:</strong> @Model.Storage</p>
+            <p><strong>Giá:</strong> @Model.Price.ToString("N0") VNĐ</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Mô tả:</strong></p>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+</div>
