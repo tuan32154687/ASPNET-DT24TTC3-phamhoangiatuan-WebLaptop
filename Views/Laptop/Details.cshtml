@@ -20,9 +20,41 @@
     <div class="mt-3">
         <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
 
-        <form asp-controller="Laptop" asp-action="AddToCart" method="post" style="display:inline;">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
-        </form>
+        <!-- Nút bấm đã được sửa để gọi hàm JavaScript thay vì submit form trực tiếp -->
+        <button type="button" class="btn btn-primary" onclick="addToCart()">Thêm vào giỏ hàng</button>
     </div>
 </div>
+
+<!-- Khai báo section Scripts để _Layout.cshtml có thể render -->
+@section Scripts {
+    <script>
+        function addToCart() {
+            // 1. Hiện thông báo đẹp mắt
+            Swal.fire({
+                icon: 'success',
+                title: 'Thêm vào giỏ hàng thành công!',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                // 2. Sau khi thông báo xong thì tự động submit form ẩn
+                // Tạo một form ẩn
+                var form = document.createElement('form');
+                form.method = 'POST';
+                // Đảm bảo action trỏ đúng về controller Laptop và action AddToCart
+                form.action = '@Url.Action("AddToCart", "Laptop")';
+
+                // Thêm input ẩn chứa ID sản phẩm
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = '@Model.Id';
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+
+                // Gửi form đi
+                form.submit();
+            });
+        }
+    </script>
+}
