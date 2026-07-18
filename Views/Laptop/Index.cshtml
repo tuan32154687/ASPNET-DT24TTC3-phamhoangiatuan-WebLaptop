@@ -1,31 +1,41 @@
-﻿@model IEnumerable<LaptopStore.Models.Laptop>
+@model IEnumerable<LaptopStore.Models.Laptop>
 
 <div class="container">
     <h2 class="my-4">Danh sách Laptop</h2>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Tên</th>
-                <th>Thương hiệu</th>
-                <th>CPU</th>
-                <th>Giá</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Brand</td>
-                    <td>@item.Cpu</td>
-                    <td>@item.Price.ToString("N0") VNĐ</td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Chi tiết</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="@item.ImageUrl"
+                         onerror="this.onerror=null;this.src='/images/no-image.png';"
+                         class="card-img-top"
+                         style="height:200px; object-fit:contain; padding:10px; background:#f8f9fa;"
+                         alt="@item.Name">
+
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary mb-2" style="width:fit-content;">@item.Brand</span>
+
+                        <h5 class="card-title">@item.Name</h5>
+
+                        <p class="card-text text-muted mb-1">
+                            <i class="bi bi-cpu"></i> @item.Cpu
+                        </p>
+                        <p class="card-text text-muted mb-1">
+                            RAM: @item.Ram &nbsp;|&nbsp; @item.Storage
+                        </p>
+
+                        <p class="card-text fw-bold text-danger fs-5 mt-2">
+                            @item.Price.ToString("N0") VNĐ
+                        </p>
+
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm mt-auto">
+                            Chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
