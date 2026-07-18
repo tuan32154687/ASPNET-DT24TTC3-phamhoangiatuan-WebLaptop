@@ -1,6 +1,6 @@
 ﻿using LaptopStore.Data;
 using LaptopStore.Models;
-using LaptopStore.Services; 
+using LaptopStore.Services; // Nhớ thêm dòng này
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,20 +9,38 @@ namespace LaptopStore.Controllers
     public class LaptopController : Controller
     {
         private readonly LaptopDbContext _context;
-        private readonly CartService _cartService; 
+        private readonly CartService _cartService; // Thêm biến này
 
-        
+        // Cập nhật constructor để nhận thêm CartService
         public LaptopController(LaptopDbContext context, CartService cartService)
         {
             _context = context;
             _cartService = cartService;
         }
 
-        // Action hiển thị danh sách
-        public async Task<IActionResult> Index()
+        // Action hiển thị danh sách (có tìm kiếm + sắp xếp theo giá)
+        public async Task<IActionResult> Index(string? searchString, string? sortOrder)
         {
-            var laptops = await _context.Laptops.ToListAsync();
-            return View(laptops);
+            var laptops = _context.Laptops.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                laptops = laptops.Where(l =>
+                    l.Name.Contains(searchString) ||
+                    (l.Brand != null && l.Brand.Contains(searchString)));
+            }
+
+            laptops = sortOrder switch
+            {
+                "price_asc" => laptops.OrderBy(l => l.Price),
+                "price_desc" => laptops.OrderByDescending(l => l.Price),
+                _ => laptops.OrderBy(l => l.Id)
+            };
+
+            ViewData["CurrentSearch"] = searchString;
+            ViewData["CurrentSort"] = sortOrder;
+
+            return View(await laptops.ToListAsync());
         }
 
         // Action hiển thị chi tiết sản phẩm
@@ -46,7 +64,7 @@ namespace LaptopStore.Controllers
             var laptop = _context.Laptops.Find(id);
             if (laptop != null)
             {
-                _cartService.AddToCart(laptop, 1); 
+                _cartService.AddToCart(laptop, 1); // Thêm 1 sản phẩm
             }
             return RedirectToAction("Index");
         }

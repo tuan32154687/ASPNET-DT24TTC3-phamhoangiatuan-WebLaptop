@@ -1,7 +1,36 @@
 @model IEnumerable<LaptopStore.Models.Laptop>
 
+<div class="p-5 mb-4 rounded-3 text-white" style="background: linear-gradient(135deg, #1e3a8a, #2563eb);">
+    <div class="container-fluid py-3">
+        <h1 class="display-6 fw-bold">LaptopStore</h1>
+        <p class="fs-5 mb-0">Đa dạng laptop văn phòng, gaming, đồ họa và mỏng nhẹ — giá tốt, chính hãng, giao hàng nhanh toàn quốc.</p>
+    </div>
+</div>
+
 <div class="container">
     <h2 class="my-4">Danh sách Laptop</h2>
+
+    <form asp-action="Index" method="get" class="row g-2 mb-4">
+        <div class="col-md-6">
+            <input type="text" name="searchString" value="@ViewData["CurrentSearch"]"
+                   class="form-control" placeholder="Tìm theo tên hoặc thương hiệu (VD: Dell, Asus...)">
+        </div>
+        <div class="col-md-4">
+            <select name="sortOrder" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Sắp xếp --</option>
+                <option value="price_asc" selected="@(ViewData["CurrentSort"]?.ToString() == "price_asc")">Giá: Thấp đến cao</option>
+                <option value="price_desc" selected="@(ViewData["CurrentSort"]?.ToString() == "price_desc")">Giá: Cao đến thấp</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">Không tìm thấy sản phẩm nào phù hợp.</div>
+    }
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         @foreach (var item in Model)

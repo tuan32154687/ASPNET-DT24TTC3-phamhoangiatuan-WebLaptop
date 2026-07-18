@@ -10,7 +10,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+            <div class="container">
                 <a class="navbar-brand" asp-controller="Laptop" asp-action="Index">LaptopStore</a>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -36,6 +36,30 @@
             @RenderBody()
         </main>
     </div>
+
+    <footer class="border-top mt-5 py-4 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>LaptopStore</h5>
+                    <p class="text-muted mb-0">Chuyên cung cấp laptop chính hãng: văn phòng, gaming, đồ họa, mỏng nhẹ với giá tốt nhất thị trường.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Liên hệ</h5>
+                    <p class="text-muted mb-1">📞 0909 123 456</p>
+                    <p class="text-muted mb-0">✉️ support@laptopstore.vn</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Chính sách</h5>
+                    <p class="text-muted mb-1">Bảo hành chính hãng 12-24 tháng</p>
+                    <p class="text-muted mb-1">Đổi trả trong 7 ngày</p>
+                    <p class="text-muted mb-0">Giao hàng toàn quốc</p>
+                </div>
+            </div>
+            <hr />
+            <p class="text-center text-muted mb-0">&copy; @DateTime.Now.Year - LaptopStore.</p>
+        </div>
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
