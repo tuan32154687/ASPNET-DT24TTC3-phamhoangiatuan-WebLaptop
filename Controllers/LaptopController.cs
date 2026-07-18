@@ -1,6 +1,6 @@
 ﻿using LaptopStore.Data;
 using LaptopStore.Models;
-using LaptopStore.Services; // Nhớ thêm dòng này
+using LaptopStore.Services; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +9,9 @@ namespace LaptopStore.Controllers
     public class LaptopController : Controller
     {
         private readonly LaptopDbContext _context;
-        private readonly CartService _cartService; // Thêm biến này
+        private readonly CartService _cartService; 
 
-        // Cập nhật constructor để nhận thêm CartService
+        
         public LaptopController(LaptopDbContext context, CartService cartService)
         {
             _context = context;
@@ -46,7 +46,7 @@ namespace LaptopStore.Controllers
             var laptop = _context.Laptops.Find(id);
             if (laptop != null)
             {
-                _cartService.AddToCart(laptop, 1); // Thêm 1 sản phẩm
+                _cartService.AddToCart(laptop, 1); 
             }
             return RedirectToAction("Index");
         }

@@ -1,6 +1,6 @@
 using LaptopStore.Data;
 using LaptopStore.Models;
-using Microsoft.EntityFrameworkCore; // Cần thiết để dùng .Any()
+using Microsoft.EntityFrameworkCore; 
 
 namespace LaptopStore.Data
 {
@@ -28,7 +28,7 @@ namespace LaptopStore.Data
                 }
 
 
-                // Nếu DB cũ có ít hơn 12 laptop (data cũ/thiếu), xóa hết và nạp lại bộ đầy đủ
+               
                 if (context.Laptops.Count() < 12)
                 {
                     if (context.Laptops.Any())
