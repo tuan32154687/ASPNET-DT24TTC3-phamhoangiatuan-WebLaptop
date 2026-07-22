@@ -1,0 +1,13 @@
+@model IEnumerable<LaptopStore.Models.Category>
+
+<li class="nav-item dropdown">
+    <a class="nav-link text-dark dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Danh mục
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+        @foreach (var cat in Model)
+        {
+            <li><a class="dropdown-item" asp-controller="Laptop" asp-action="Index" asp-route-categoryId="@cat.Id">@cat.Name</a></li>
+        }
+    </ul>
+</li>
