@@ -21,6 +21,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Laptop" asp-action="Index">Sản phẩm</a>
                         </li>
+                        @await Component.InvokeAsync("CategoryMenu")
                     </ul>
 
                     <ul class="navbar-nav align-items-center">
