@@ -37,7 +37,7 @@ app.MapStaticAssets();
 // Sửa dòng này để mặc định vào Laptop/Index thay vì Home/Index
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Laptop}/{action=Index}/{id?}")
+    pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 // Seed Database
