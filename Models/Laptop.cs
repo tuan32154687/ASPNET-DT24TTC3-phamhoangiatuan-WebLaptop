@@ -24,7 +24,7 @@ namespace LaptopStore.Models
         public string? ImageUrl { get; set; }
         public string? Description { get; set; }
 
-        // Khóa ngoại liên kết với Category
+       
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
     }

@@ -18,16 +18,21 @@ namespace LaptopStore.Controllers
             _cartService = cartService;
         }
 
-        // Action hiển thị danh sách (có tìm kiếm + sắp xếp theo giá)
-        public async Task<IActionResult> Index(string? searchString, string? sortOrder)
+        // Action hiển thị danh sách (có tìm kiếm + sắp xếp theo giá + lọc theo danh mục)
+        public async Task<IActionResult> Index(string? searchString, string? sortOrder, int? categoryId)
         {
-            var laptops = _context.Laptops.AsQueryable();
+            var laptops = _context.Laptops.Include(l => l.Category).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 laptops = laptops.Where(l =>
                     l.Name.Contains(searchString) ||
                     (l.Brand != null && l.Brand.Contains(searchString)));
+            }
+
+            if (categoryId.HasValue)
+            {
+                laptops = laptops.Where(l => l.CategoryId == categoryId.Value);
             }
 
             laptops = sortOrder switch
@@ -39,6 +44,9 @@ namespace LaptopStore.Controllers
 
             ViewData["CurrentSearch"] = searchString;
             ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentCategoryName"] = categoryId.HasValue
+                ? (await _context.Categories.FindAsync(categoryId.Value))?.Name
+                : null;
 
             return View(await laptops.ToListAsync());
         }
@@ -57,19 +65,18 @@ namespace LaptopStore.Controllers
             return View(laptop);
         }
 
-        // Hàm xử lý nút "Thêm vào giỏ hàng"
         [HttpPost]
         public IActionResult AddToCart(int id)
         {
             var laptop = _context.Laptops.Find(id);
             if (laptop != null)
             {
-                _cartService.AddToCart(laptop, 1); // Thêm 1 sản phẩm
+                _cartService.AddToCart(laptop, 1); 
             }
             return RedirectToAction("Index");
         }
 
-        // Action Create (giữ nguyên như cũ)
+        
         public IActionResult Create()
         {
             ViewBag.CategoryId = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Categories, "Id", "Name");

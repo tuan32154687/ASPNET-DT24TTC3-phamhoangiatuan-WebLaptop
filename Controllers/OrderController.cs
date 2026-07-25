@@ -66,7 +66,7 @@ namespace LaptopStore.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            _cartService.ClearCart(); // Xóa giỏ hàng sau khi đặt thành công
+            _cartService.ClearCart(); 
 
             return RedirectToAction(nameof(Confirmation), new { id = order.Id });
         }
