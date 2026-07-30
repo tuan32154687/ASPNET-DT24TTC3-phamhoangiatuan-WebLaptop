@@ -15,21 +15,12 @@
 
     <h3 class="mb-3">Danh mục nổi bật</h3>
     <div class="row row-cols-2 row-cols-md-4 g-3 mb-5">
-        @{
-            var icons = new Dictionary<string, string> {
-                { "Laptop Gaming", "🎮" },
-                { "Laptop Văn phòng", "💼" },
-                { "Laptop Đồ họa - Kỹ thuật", "🎨" },
-                { "Laptop Mỏng nhẹ", "✈️" }
-            };
-        }
         @foreach (var cat in (List<Category>)ViewBag.Categories)
         {
             <div class="col">
                 <a asp-controller="Laptop" asp-action="Index" asp-route-categoryId="@cat.Id"
-                   class="card h-100 text-decoration-none text-dark shadow-sm text-center py-4">
-                    <div style="font-size: 2.5rem;">@(icons.ContainsKey(cat.Name) ? icons[cat.Name] : "💻")</div>
-                    <div class="fw-semibold mt-2">@cat.Name</div>
+                   class="card h-100 text-decoration-none text-dark shadow-sm text-center py-4 d-flex align-items-center justify-content-center">
+                    <div class="fw-semibold fs-5">@cat.Name</div>
                 </a>
             </div>
         }
