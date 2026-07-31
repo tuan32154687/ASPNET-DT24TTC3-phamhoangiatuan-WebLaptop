@@ -3,35 +3,73 @@
     ViewData["Title"] = "Trang chủ";
 }
 
-<div class="p-5 mb-4 rounded-3 text-white" style="background: linear-gradient(135deg, #1e3a8a, #2563eb);">
-    <div class="container-fluid py-3">
-        <h1 class="display-6 fw-bold">LaptopStore</h1>
-        <p class="fs-5 mb-3">Đa dạng laptop văn phòng, gaming, đồ họa và mỏng nhẹ — giá tốt, chính hãng, giao hàng nhanh toàn quốc.</p>
-        <a asp-controller="Laptop" asp-action="Index" class="btn btn-light btn-lg fw-bold">Xem tất cả sản phẩm</a>
+<div class="hero-banner text-white mb-4">
+    <div class="hero-decor hero-decor-1"></div>
+    <div class="hero-decor hero-decor-2"></div>
+
+    <div class="container-fluid py-5 px-4 px-md-5 position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="section-eyebrow" style="color:#bfdbfe;">Cửa hàng laptop chính hãng</span>
+                <h1 class="display-5 fw-bold mb-3">LaptopStore</h1>
+                <p class="fs-5 mb-4" style="max-width: 560px; opacity:0.92;">
+                    Đa dạng laptop văn phòng, gaming, đồ họa và mỏng nhẹ — giá tốt, chính hãng, giao hàng nhanh toàn quốc.
+                </p>
+                <a asp-controller="Laptop" asp-action="Index" class="btn btn-light btn-lg fw-bold btn-cta">
+                    Xem tất cả sản phẩm <span aria-hidden="true">→</span>
+                </a>
+            </div>
+            <div class="col-lg-5 d-none d-lg-flex justify-content-center">
+                <svg width="260" height="200" viewBox="0 0 260 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="55" y="20" width="150" height="98" rx="8" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.5)" stroke-width="3"/>
+                    <rect x="67" y="32" width="126" height="74" rx="3" fill="rgba(255,255,255,0.22)"/>
+                    <path d="M30 130 H230 L215 155 H45 Z" fill="rgba(255,255,255,0.28)" stroke="rgba(255,255,255,0.5)" stroke-width="3"/>
+                    <rect x="105" y="140" width="50" height="6" rx="3" fill="rgba(255,255,255,0.5)"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-band">
+    <div class="container">
+        <span class="section-eyebrow">Khám phá theo nhu cầu</span>
+        <h3 class="section-heading mb-4">Danh mục nổi bật</h3>
+
+        <div class="row row-cols-2 row-cols-md-4 g-3">
+            @{
+                var catColors = new Dictionary<string, string> {
+                    { "Laptop Gaming", "#7c3aed" },
+                    { "Laptop Văn phòng", "#0891b2" },
+                    { "Laptop Đồ họa - Kỹ thuật", "#ea580c" },
+                    { "Laptop Mỏng nhẹ", "#16a34a" }
+                };
+            }
+            @foreach (var cat in (List<Category>)ViewBag.Categories)
+            {
+                var color = catColors.ContainsKey(cat.Name) ? catColors[cat.Name] : "#2563eb";
+                <div class="col">
+                    <a asp-controller="Laptop" asp-action="Index" asp-route-categoryId="@cat.Id"
+                       class="card category-card hover-lift h-100 text-decoration-none text-dark shadow-sm text-center py-4 d-flex align-items-center justify-content-center"
+                       style="border-top-color: @color;">
+                        <div class="fw-semibold">@cat.Name</div>
+                    </a>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
 <div class="container">
 
-    <h3 class="mb-3">Danh mục nổi bật</h3>
-    <div class="row row-cols-2 row-cols-md-4 g-3 mb-5">
-        @foreach (var cat in (List<Category>)ViewBag.Categories)
-        {
-            <div class="col">
-                <a asp-controller="Laptop" asp-action="Index" asp-route-categoryId="@cat.Id"
-                   class="card h-100 text-decoration-none text-dark shadow-sm text-center py-4 d-flex align-items-center justify-content-center">
-                    <div class="fw-semibold fs-5">@cat.Name</div>
-                </a>
-            </div>
-        }
-    </div>
+    <span class="section-eyebrow d-block mt-5">Được quan tâm nhiều nhất</span>
+    <h3 class="section-heading mb-4">Sản phẩm nổi bật</h3>
 
-    <h3 class="mb-3">Sản phẩm nổi bật</h3>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mb-5">
         @foreach (var item in (List<Laptop>)ViewBag.FeaturedLaptops)
         {
             <div class="col">
-                <div class="card h-100 shadow-sm">
+                <div class="card hover-lift h-100 shadow-sm">
                     <img src="@item.ImageUrl"
                          onerror="this.onerror=null;this.src='/images/no-image.png';"
                          class="card-img-top"
@@ -50,19 +88,19 @@
 
     <div class="row text-center mb-5">
         <div class="col-md-4 mb-3">
-            <div style="font-size: 2rem;">🛡️</div>
-            <h5>Bảo hành chính hãng</h5>
-            <p class="text-muted">12–24 tháng tùy sản phẩm</p>
+            <div class="perk-icon">🛡️</div>
+            <h6 class="fw-bold">Bảo hành chính hãng</h6>
+            <p class="text-muted small mb-0">12–24 tháng tùy sản phẩm</p>
         </div>
         <div class="col-md-4 mb-3">
-            <div style="font-size: 2rem;">🚚</div>
-            <h5>Giao hàng nhanh</h5>
-            <p class="text-muted">Toàn quốc, hỗ trợ giao hỏa tốc</p>
+            <div class="perk-icon">🚚</div>
+            <h6 class="fw-bold">Giao hàng nhanh</h6>
+            <p class="text-muted small mb-0">Toàn quốc, hỗ trợ giao hỏa tốc</p>
         </div>
         <div class="col-md-4 mb-3">
-            <div style="font-size: 2rem;">↩️</div>
-            <h5>Đổi trả dễ dàng</h5>
-            <p class="text-muted">Trong vòng 7 ngày kể từ khi nhận hàng</p>
+            <div class="perk-icon">↩️</div>
+            <h6 class="fw-bold">Đổi trả dễ dàng</h6>
+            <p class="text-muted small mb-0">Trong vòng 7 ngày kể từ khi nhận hàng</p>
         </div>
     </div>
 

@@ -29,3 +29,105 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* ===== LaptopStore custom design ===== */
+
+:root {
+  --ls-primary: #1e3a8a;
+  --ls-primary-light: #2563eb;
+  --ls-surface-alt: #f6f8fc;
+  --ls-text-dim: #64748b;
+}
+
+/* Nhãn nhỏ phía trên tiêu đề mục (eyebrow label) */
+.section-eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ls-primary-light);
+  margin-bottom: 0.25rem;
+}
+
+.section-heading {
+  font-weight: 700;
+  position: relative;
+  padding-left: 14px;
+  border-left: 4px solid var(--ls-primary-light);
+}
+
+/* Dải nền xen kẽ giữa các khối trên trang chủ */
+.section-band {
+  background-color: var(--ls-surface-alt);
+  padding: 3rem 0;
+}
+
+/* Hiệu ứng nổi nhẹ khi hover cho mọi card sản phẩm / danh mục */
+.hover-lift {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.75rem 1.5rem rgba(30, 58, 138, 0.12) !important;
+}
+
+/* Card danh mục có vạch màu riêng phía trên */
+.category-card {
+  border-top: 4px solid var(--ls-primary-light);
+  font-size: 1.05rem;
+}
+
+/* Nút CTA chính trên banner */
+.btn-cta {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Icon vòng tròn cho phần chính sách (bảo hành / giao hàng / đổi trả) */
+.perk-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: rgba(37, 99, 235, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto 0.75rem;
+}
+
+/* Banner trang chủ */
+.hero-banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #142a63 0%, #1e3a8a 45%, #2563eb 100%);
+}
+
+.hero-decor {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-decor-1 {
+  width: 320px;
+  height: 320px;
+  right: -100px;
+  top: -140px;
+  background: radial-gradient(circle, rgba(255,255,255,0.10), transparent 70%);
+}
+
+.hero-decor-2 {
+  width: 220px;
+  height: 220px;
+  left: -80px;
+  bottom: -100px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+}
