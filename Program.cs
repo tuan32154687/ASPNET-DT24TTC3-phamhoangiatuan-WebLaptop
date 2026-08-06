@@ -1,5 +1,7 @@
 using LaptopStore.Data;
+using LaptopStore.Models;
 using LaptopStore.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,25 @@ builder.Services.AddDbContext<LaptopDbContext>(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 builder.Services.AddScoped<CartService>();
+
+// 3. Cấu hình Identity cho chức năng Đăng nhập / Đăng ký
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+    {
+        // Nới lỏng yêu cầu mật khẩu cho phù hợp đồ án môn học
+        options.Password.RequireDigit = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredLength = 6;
+        options.SignIn.RequireConfirmedAccount = false;
+    })
+    .AddEntityFrameworkStores<LaptopDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/Login";
+});
 
 var app = builder.Build();
 
@@ -28,9 +49,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// 3. Kích hoạt Session
+// 4. Kích hoạt Session
 app.UseSession();
 
+// 5. Kích hoạt Xác thực (PHẢI đặt trước UseAuthorization)
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapStaticAssets();
 

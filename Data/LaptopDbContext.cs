@@ -1,9 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using LaptopStore.Models;
 
 namespace LaptopStore.Data
 {
-    public class LaptopDbContext : DbContext
+    // Kế thừa IdentityDbContext để có thêm các bảng quản lý tài khoản
+    // (AspNetUsers, AspNetRoles, ...) bên cạnh các bảng dữ liệu sẵn có
+    public class LaptopDbContext : IdentityDbContext<ApplicationUser>
     {
         public LaptopDbContext(DbContextOptions<LaptopDbContext> options) : base(options) { }
 
@@ -16,6 +20,7 @@ namespace LaptopStore.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Bắt buộc gọi base để Identity cấu hình đúng các bảng tài khoản
             base.OnModelCreating(modelBuilder);
 
             // Cấu hình kiểu dữ liệu cho Price
