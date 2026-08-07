@@ -1,0 +1,70 @@
+@model IEnumerable<LaptopStore.Models.Order>
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+    var statuses = Enum.GetValues(typeof(LaptopStore.Models.OrderStatus)).Cast<LaptopStore.Models.OrderStatus>();
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Quản lý đơn hàng</h2>
+        <a asp-controller="AdminUsers" asp-action="Index" class="btn btn-outline-secondary btn-sm">Quản lý tài khoản →</a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <form asp-action="Index" method="get" class="row g-2 mb-4">
+        <div class="col-auto">
+            <select name="statusFilter" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Tất cả trạng thái --</option>
+                @foreach (var s in statuses)
+                {
+                    <option value="@s" selected="@(ViewData["CurrentFilter"]?.ToString() == s.ToString())">@s.ToDisplayName()</option>
+                }
+            </select>
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">Không có đơn hàng nào phù hợp.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Ngày đặt</th>
+                        <th>Người nhận</th>
+                        <th>SĐT</th>
+                        <th>Số sản phẩm</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>#@order.Id</td>
+                            <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@order.ReceiverName</td>
+                            <td>@order.PhoneNumber</td>
+                            <td>@order.OrderItems.Sum(i => i.Quantity)</td>
+                            <td class="fw-bold text-danger">@order.TotalAmount.ToString("N0") VNĐ</td>
+                            <td><span class="badge @order.Status.ToBadgeClass()">@order.Status.ToDisplayName()</span></td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-sm btn-info">Xem chi tiết</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

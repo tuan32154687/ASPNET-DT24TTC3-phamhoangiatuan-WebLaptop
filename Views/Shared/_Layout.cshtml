@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,10 +10,20 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="topbar-promo">
+        <div class="container-fluid px-4 px-lg-5 d-flex justify-content-center flex-wrap gap-3 gap-md-4">
+            <span>🚚 Miễn phí giao hàng toàn quốc</span>
+            <span class="d-none d-sm-inline">🛡️ Bảo hành chính hãng 12–24 tháng</span>
+            <span class="d-none d-md-inline">💳 Trả góp 0% lãi suất</span>
+        </div>
+    </div>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">LaptopStore</a>
+            <div class="container-fluid px-4 px-lg-5">
+                <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="TUẤN Laptop" style="height:52px; width:auto;" />
+                </a>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
@@ -35,20 +47,59 @@
                         <li class="nav-item">
                             @await Component.InvokeAsync("CartSummary")
                         </li>
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            var currentUser = await UserManager.GetUserAsync(User);
+                            var displayName = !string.IsNullOrWhiteSpace(currentUser?.FullName) ? currentUser.FullName : User.Identity.Name;
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link text-dark dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        ⚙️ Quản trị
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                                        <li><a class="dropdown-item" asp-controller="AdminOrders" asp-action="Index">Quản lý đơn hàng</a></li>
+                                        <li><a class="dropdown-item" asp-controller="AdminUsers" asp-action="Index">Quản lý tài khoản</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    👤 @displayName
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li>
+                                        <form asp-controller="Account" asp-action="Logout" method="post">
+                                            <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold" asp-controller="Account" asp-action="Login">Đăng nhập</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary btn-sm rounded-pill px-3 fw-semibold ms-2 shadow-sm" asp-controller="Account" asp-action="Register">Đăng ký</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container-fluid px-4 px-lg-5">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top mt-5 py-4 bg-light">
-        <div class="container">
+        <div class="container-fluid px-4 px-lg-5">
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <h5>LaptopStore</h5>

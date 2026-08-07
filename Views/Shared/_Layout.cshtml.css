@@ -1,48 +1,56 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿@using Microsoft.AspNetCore.Identity @inject UserManager<ApplicationUser> UserManager <!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>@ViewData["Title"] - LaptopStore</title> <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> </head> <body> <div class="topbar-promo"> <div class="container d-flex justify-content-center flex-wrap gap-3 gap-md-4"> <span>🚚 Miễn phí giao hàng toàn quốc</span> <span class="d-none d-sm-inline">🛡️ Bảo hành chính hãng 12–24 tháng</span> <span class="d-none d-md-inline">💳 Trả góp 0% lãi suất</span> </div> </div> <header> <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3"> <div class="container"> <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index"> <svg width="30" height="30" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"> <rect width="40" height="40" rx="9" fill="#1e3a8a"/> <rect x="10" y="11" width="20" height="13" rx="1.5" fill="#ffffff" fill-opacity="0.92"/> <path d="M7 26 H33 L30.5 30.5 H9.5 Z" fill="#ffffff" fill-opacity="0.7"/> </svg> <span>LaptopStore</span> </a> <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> <ul class="navbar-nav flex-grow-1"> <li class="nav-item"> <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Trang chủ</a> </li> <li class="nav-item"> <a class="nav-link text-dark" asp-controller="Laptop" asp-action="Index">Sản phẩm</a> </li> </ul> <ul class="navbar-nav align-items-center"> @await Component.InvokeAsync("CategoryMenu") <li class="nav-item"> <a class="nav-link text-dark" asp-controller="Home" asp-action="About">Về chúng tôi</a> </li> <li class="nav-item"> <a class="nav-link text-dark" asp-controller="Home" asp-action="Contact">Liên hệ</a> </li>
+<!-- Đã thay thế link cũ bằng ViewComponent CartSummary -->
+<li class="nav-item"> @await Component.InvokeAsync("CartSummary") </li> @if (User.Identity != null && User.Identity.IsAuthenticated) {
+    var currentUser = await UserManager.GetUserAsync(User);
+    var displayName = !string.IsNullOrWhiteSpace(currentUser?.FullName) ? currentUser.FullName : User.Identity.Name;
+    <li class="nav-item dropdown"> <a class="nav-link text-dark dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 👤 @displayName </a> <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown"> <li> <form asp-controller="Account" asp-action="Logout" method="post"> <button type="submit" class="dropdown-item">Đăng xuất</button> </form> </li> </ul> </li>
 }
 
-a {
-  color: #0077cc;
+else {
+    <li class="nav-item"> <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Đăng nhập</a> </li> <li class="nav-item"> <a class="btn btn-primary btn-sm ms-2" asp-controller="Account" asp-action="Register">Đăng ký</a> </li>
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
+</ul >
+</div >
+</div >
+</nav >
+</header >
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
+<div class="container" >
+<main role="main" class="pb-3" >
+@RenderBody()
+</main >
+</div >
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
+<footer class="border-top mt-5 py-4 bg-light" >
+<div class="container" >
+<div class="row" >
+<div class="col-md-4 mb-3" >
+<h5 > LaptopStore</h5 >
+<p class="text-muted mb-0" > Chuyên cung cấp laptop chính hãng: văn phòng, gaming, đồ họa, mỏng nhẹ với giá tốt nhất thị trường.</p >
+</div >
+<div class="col-md-4 mb-3" >
+<h5 > Liên hệ</h5 >
+<p class="text-muted mb-1" > 📞 0909 123 456</p >
+<p class="text-muted mb-0" > ✉️ support@laptopstore.vn</p >
+</div >
+<div class="col-md-4 mb-3" >
+<h5 > Chính sách</h5 >
+<p class="text-muted mb-1" > Bảo hành chính hãng 12-24 tháng</p >
+<p class="text-muted mb-1" > Đổi trả trong 7 ngày</p >
+<p class="text-muted mb-0" > Giao hàng toàn quốc</p >
+</div >
+</div >
+<hr / >
+<p class="text-center text-muted mb-0" > &copy; @DateTime.Now.Year - LaptopStore.</p >
+</div >
+</footer >
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
+<script src="~/lib/jquery/dist/jquery.min.js" > </script >
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" > </script >
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" > </script >
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
-}
+@await RenderSectionAsync("Scripts", required: false)
+</body >
+</html >

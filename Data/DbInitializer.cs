@@ -1,5 +1,6 @@
 using LaptopStore.Data;
 using LaptopStore.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore; 
 
 namespace LaptopStore.Data
@@ -227,6 +228,41 @@ namespace LaptopStore.Data
                     );
                     context.SaveChanges();
                 }
+            }
+
+            // ---------- Seed Role "Admin" và tài khoản Admin mẫu ----------
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            string[] roleNames = { "Admin", "Customer" };
+            foreach (var roleName in roleNames)
+            {
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            const string adminEmail = "admin@laptopstore.vn";
+            const string adminPassword = "Admin@123";
+
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+            if (adminUser == null)
+            {
+                adminUser = new ApplicationUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    FullName = "Quản trị viên",
+                    PhoneNumber = "0900000000",
+                    EmailConfirmed = true
+                };
+                await userManager.CreateAsync(adminUser, adminPassword);
+            }
+
+            if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+            {
+                await userManager.AddToRoleAsync(adminUser, "Admin");
             }
         }
     }
