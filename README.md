@@ -15,7 +15,6 @@ Website thương mại điện tử bán laptop, xây dựng trên nền tảng 
 - [Yêu cầu môi trường](#yêu-cầu-môi-trường)
 - [Hướng dẫn cài đặt và chạy dự án](#hướng-dẫn-cài-đặt-và-chạy-dự-án)
 - [Tài khoản demo](#tài-khoản-demo)
-- [Một số hình ảnh giao diện](#một-số-hình-ảnh-giao-diện)
 - [Hướng phát triển](#hướng-phát-triển)
 - [Thông tin liên hệ](#thông-tin-liên-hệ)
 
@@ -163,28 +162,6 @@ https://localhost:7008
 | Khách hàng | *Tự đăng ký tài khoản mới tại trang Đăng ký* | — |
 
 Sau khi đăng nhập bằng tài khoản Admin, truy cập khu vực quản trị qua đường dẫn `/AdminOrders` (quản lý đơn hàng) hoặc `/AdminUsers` (quản lý tài khoản).
-
----
-
-## Một số hình ảnh giao diện
-
-> *(Chèn ảnh chụp màn hình thực tế của website vào các mục dưới đây trước ngày báo cáo)*
-
-**Trang chủ**
-
-`[ Chèn ảnh trang chủ tại đây ]`
-
-**Trang danh sách sản phẩm**
-
-`[ Chèn ảnh trang danh sách sản phẩm tại đây ]`
-
-**Trang chi tiết sản phẩm**
-
-`[ Chèn ảnh trang chi tiết sản phẩm tại đây ]`
-
-**Khu vực quản trị**
-
-`[ Chèn ảnh trang quản lý đơn hàng / tài khoản tại đây ]`
 
 ---
 
